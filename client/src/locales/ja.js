@@ -6,8 +6,19 @@ export default {
     orders: '注文',
     finance: '財務',
     demandForecast: '需要予測',
+    reports: 'レポート',
     companyName: '触媒コンポーネンツ',
     subtitle: '在庫管理システム'
+  },
+
+  // Accessibility / assistive-tech-facing strings for the sidebar shell
+  a11y: {
+    skipToContent: 'コンテンツへスキップ',
+    toggleNav: 'ナビゲーションを切り替える',
+    collapseSidebar: 'サイドバーを折りたたむ',
+    expandSidebar: 'サイドバーを展開する',
+    mainNav: 'メイン',
+    resetFilters: 'すべてのフィルターをリセット'
   },
 
   // Dashboard

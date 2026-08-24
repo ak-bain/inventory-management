@@ -53,3 +53,8 @@ logs/
 
 # Environment variables
 .env
+
+# Agent tooling/scratch artifacts
+.scaffolding/
+artifacts/
+pw-profile/

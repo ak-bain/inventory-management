@@ -6,8 +6,19 @@ export default {
     orders: 'Orders',
     finance: 'Finance',
     demandForecast: 'Demand Forecast',
+    reports: 'Reports',
     companyName: 'Catalyst Components',
     subtitle: 'Inventory Management System'
+  },
+
+  // Accessibility / assistive-tech-facing strings for the sidebar shell
+  a11y: {
+    skipToContent: 'Skip to content',
+    toggleNav: 'Toggle navigation',
+    collapseSidebar: 'Collapse sidebar',
+    expandSidebar: 'Expand sidebar',
+    mainNav: 'Main',
+    resetFilters: 'Reset all filters'
   },
 
   // Dashboard
