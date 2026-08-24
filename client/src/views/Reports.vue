@@ -103,19 +103,19 @@
 
       <!-- Summary Stats -->
       <div class="stats-grid">
-        <div class="stat-card">
+        <div class="stat-card stat-card--accent">
           <div class="stat-label">Total Revenue (YTD)</div>
           <div class="stat-value">${{ formatNumber(totalRevenue) }}</div>
         </div>
-        <div class="stat-card">
+        <div class="stat-card stat-card--accent">
           <div class="stat-label">Avg Monthly Revenue</div>
           <div class="stat-value">${{ formatNumber(avgMonthlyRevenue) }}</div>
         </div>
-        <div class="stat-card">
+        <div class="stat-card stat-card--accent">
           <div class="stat-label">Total Orders (YTD)</div>
           <div class="stat-value">{{ totalOrders }}</div>
         </div>
-        <div class="stat-card">
+        <div class="stat-card stat-card--accent">
           <div class="stat-label">Best Performing Quarter</div>
           <div class="stat-value">{{ bestQuarter }}</div>
         </div>
@@ -321,24 +321,9 @@ export default {
   padding: 0;
 }
 
-.card {
-  background: white;
-  border-radius: 12px;
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.card-header {
-  margin-bottom: 1.5rem;
-}
-
-.card-title {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #0f172a;
-  margin: 0;
-}
+/* .card, .card-header, .card-title: previously shadowed the global definitions
+   in App.vue with different radius/border/shadow values. Deleted so this view
+   matches the sitewide card styling defined once, globally. */
 
 .reports-table {
   width: 100%;
@@ -346,25 +331,26 @@ export default {
 }
 
 .reports-table th {
-  background: #f8fafc;
-  padding: 0.75rem;
+  background: var(--muted);
+  padding: var(--space-3);
   text-align: left;
   font-weight: 600;
-  color: #64748b;
-  border-bottom: 2px solid #e2e8f0;
+  color: var(--muted-foreground);
+  border-bottom: 2px solid var(--border);
 }
 
 .reports-table td {
-  padding: 0.75rem;
-  border-bottom: 1px solid #e2e8f0;
+  padding: var(--space-3);
+  border-bottom: 1px solid var(--border);
+  font-variant-numeric: tabular-nums;
 }
 
 .reports-table tr:hover {
-  background: #f8fafc;
+  background: var(--muted);
 }
 
 .chart-container {
-  padding: 2rem 1rem;
+  padding: var(--space-8) var(--space-4);
   min-height: 300px;
 }
 
@@ -373,7 +359,7 @@ export default {
   align-items: flex-end;
   justify-content: space-around;
   height: 250px;
-  gap: 0.5rem;
+  gap: var(--space-2);
 }
 
 .bar-wrapper {
@@ -393,96 +379,60 @@ export default {
 
 .bar {
   width: 100%;
-  background: linear-gradient(to top, #3b82f6, #60a5fa);
-  border-radius: 4px 4px 0 0;
-  transition: all 0.3s;
+  background: linear-gradient(to top, var(--blue-9), var(--blue-8));
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  transition: background-image 0.3s ease;
   cursor: pointer;
 }
 
 .bar:hover {
-  background: linear-gradient(to top, #2563eb, #3b82f6);
+  background: linear-gradient(to top, var(--blue-10), var(--blue-9));
 }
 
+/* margin-top was declared twice (0.5rem then 1.5rem); the second silently won.
+   Collapsed to a single declaration, keeping 1.5rem to preserve current spacing. */
 .bar-label {
-  margin-top: 0.5rem;
-  font-size: 0.75rem;
-  color: #64748b;
+  margin-top: var(--space-6);
+  font-size: var(--text-xs);
+  color: var(--muted-foreground);
   text-align: center;
   transform: rotate(-45deg);
   white-space: nowrap;
-  margin-top: 1.5rem;
+  font-variant-numeric: tabular-nums;
 }
 
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1rem;
-  margin-top: 1.5rem;
+/* .stats-grid, .stat-label: previously shadowed the global definitions
+   (different minmax/gap, non-uppercase label) with no meaningful difference
+   in this view. Deleted so this view matches the sitewide stat-card grid. */
+
+/* .stat-card accent border was a deliberate variant (highlighting the YTD
+   summary KPIs), so it's promoted to a modifier instead of shadowing the
+   global .stat-card. Applied alongside .stat-card in the template. */
+.stat-card--accent {
+  border-left: 4px solid var(--primary);
 }
 
-.stat-card {
-  background: white;
-  border-radius: 12px;
-  padding: 1.5rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  border-left: 4px solid #3b82f6;
-}
-
-.stat-label {
-  font-size: 0.875rem;
-  color: #64748b;
-  margin-bottom: 0.5rem;
-}
-
+/* .stat-value: font-size/weight/color duplicated (with a smaller size) the
+   global definition; only the tabular-nums addition is kept here since the
+   global rule doesn't declare it. */
 .stat-value {
-  font-size: 1.875rem;
-  font-weight: 700;
-  color: #0f172a;
+  font-variant-numeric: tabular-nums;
 }
 
-.badge {
-  padding: 0.25rem 0.75rem;
-  border-radius: 9999px;
-  font-size: 0.875rem;
-  font-weight: 500;
-}
-
-.badge.success {
-  background: #dcfce7;
-  color: #166534;
-}
-
-.badge.warning {
-  background: #fef3c7;
-  color: #92400e;
-}
-
-.badge.danger {
-  background: #fee2e2;
-  color: #991b1b;
-}
+/* .badge + success/warning/danger: previously a pill shape with a different,
+   non-uppercase color set than the global chips. Deleted so status chips
+   match the global badge system everywhere. */
 
 .positive-change {
-  color: #16a34a;
+  color: var(--green-11);
   font-weight: 600;
 }
 
 .negative-change {
-  color: #dc2626;
+  color: var(--destructive);
   font-weight: 600;
 }
 
-.loading {
-  text-align: center;
-  padding: 3rem;
-  color: #64748b;
-}
-
-.error {
-  background: #fee2e2;
-  color: #991b1b;
-  padding: 1rem;
-  border-radius: 8px;
-  margin: 1rem 0;
-}
+/* .loading, .error: dead duplicates of the global rules (same role, same
+   colors once tokenized). Deleted. */
 </style>
